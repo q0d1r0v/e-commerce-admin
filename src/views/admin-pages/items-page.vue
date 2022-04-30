@@ -106,6 +106,7 @@ export default {
 
   data() {
     return {
+      delete_files: [],
       item_data: {
         item_id: "",
         item_title: "",
@@ -130,6 +131,11 @@ export default {
         {
           text: "Tovar nomi",
           value: "product_name",
+          align: "center",
+        },
+        {
+          text: "Tovar narxi",
+          value: "product_price",
           align: "center",
         },
         {
@@ -161,7 +167,7 @@ export default {
 
   methods: {
     showDeleteDialog(item) {
-      console.log(item);
+      this.delete_files = item.images;
       this.item_data.item_title = item.product_name;
       this.item_data.item_id = item.id;
       this.delete_dialog = true;
@@ -178,6 +184,7 @@ export default {
         const response = await axios.delete("products/delete-many", {
           params: {
             items_id: this.item_data.items_id,
+            items: this.data_table_items,
           },
         });
         this.$store.dispatch("items/getItems");
@@ -201,6 +208,7 @@ export default {
         const response = await axios.delete("products/delete-one", {
           params: {
             item_id: this.item_data.item_id,
+            images: this.delete_files,
           },
         });
         this.$store.dispatch("items/getItems");

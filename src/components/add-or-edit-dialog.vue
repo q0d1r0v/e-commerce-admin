@@ -2,7 +2,7 @@
 <template>
   <div>
     <v-dialog width="600px" persistent v-model="show">
-      <v-card width="600px" min-height="600px" class="pa-0">
+      <v-card width="600px" min-height="670px" class="pa-0">
         <h1 v-if="formData.editing" class="pl-5 pt-5">{{ formData.title }}</h1>
         <div>
           <v-text-field
@@ -20,6 +20,14 @@
             label="Tovar turi"
             outlined
             hide-details
+            class="pa-5"
+          />
+          <v-text-field
+            v-model="formData.price"
+            label="Tovar narxi"
+            outlined
+            hide-details
+            type="number"
             class="pa-5"
           />
           <v-file-input
@@ -83,22 +91,25 @@ export default {
     return {
       items_category: [
         {
-          title: "texnikalar",
+          title: "Elektor jihozlari",
         },
         {
-          title: "avto-texnikalar",
+          title: "Smartfonlar",
         },
         {
-          title: "telefonlar",
+          title: "Noutbuklar",
         },
         {
-          title: "kiyimlar",
+          title: "Oshxina anjomlari",
         },
         {
-          title: "aksessuarlar",
+          title: "Sport anjomlari",
         },
         {
-          title: "boshqa",
+          title: "Avto jihozlar anjomlari",
+        },
+        {
+          title: "Boshqa",
         },
       ],
     };
@@ -115,6 +126,7 @@ export default {
         formData.append("product_name", this.formData.title);
         formData.append("product_type", this.formData.type);
         formData.append("product_additional", this.formData.additional_data);
+        formData.append("product_price", this.formData.price);
         this.formData.images.forEach((image) => {
           formData.append("images", image);
         });
@@ -138,6 +150,7 @@ export default {
           const response = await axios.put("products/update", {
             item_id: this.formData.item_id,
             product_name: this.formData.title,
+            product_price: this.formData.price,
             product_type: this.formData.type,
             product_additional: this.formData.additional_data,
           });

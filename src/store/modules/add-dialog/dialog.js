@@ -8,6 +8,7 @@ const state = {
     title: "",
     type: "",
     images: [],
+    price: null,
     additional_data: "",
   },
 };
@@ -27,12 +28,14 @@ const mutations = {
     state.formData.type = "";
     state.formData.images = [];
     state.formData.additional_data = "";
+    state.formData.price = "";
   },
   SHOW_EDIT_DIALOG: (state, data) => {
     state.formData.editing = true;
     state.data.show = true;
     state.formData.item_id = data.id;
     state.formData.title = data.product_name;
+    state.formData.price = data.product_price;
     state.formData.type = data.product_type;
     state.formData.additional_data = data.product_additional;
     state.formData.images = [];
